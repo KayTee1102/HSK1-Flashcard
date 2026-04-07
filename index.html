@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="vi">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,12 +9,15 @@
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Noto+Sans+SC:wght@400;700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Noto+Sans+SC:wght@400;700&display=swap"
+        rel="stylesheet">
     <!-- FontAwesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Custom CSS -->
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
     <div class="background-blobs">
         <div class="blob blob-1"></div>
@@ -32,7 +36,8 @@
             <div class="upload-content">
                 <i class="fa-solid fa-cloud-arrow-up icon-large"></i>
                 <h2>Cần tải tệp dữ liệu</h2>
-                <p>Do lý do bảo mật của trình duyệt, nếu bạn đang mở file này trên máy tính (Offline), vui lòng chọn file <strong>hsk1_sample_data.json</strong> để tiếp tục.</p>
+                <p>Do lý do bảo mật của trình duyệt, nếu bạn đang mở file này trên máy tính (Offline), vui lòng chọn
+                    file <strong>hsk1_sample_data.json</strong> để tiếp tục.</p>
                 <label for="jsonFileInput" class="btn-primary">
                     <i class="fa-solid fa-folder-open"></i> Chọn File JSON
                 </label>
@@ -41,12 +46,17 @@
         </section>
 
         <section id="progress-course" class="glass-panel hidden" style="margin-bottom: 1rem; padding: 1.5rem;">
-            <div class="progress-header" style="display: flex; justify-content: space-between; margin-bottom: 0.5rem; font-weight: 600;">
-                <span>Tiến độ học (Đã thuộc: <span id="learned-count">0</span>/<span id="total-learned-target">0</span>)</span>
+            <div class="progress-header"
+                style="display: flex; justify-content: space-between; margin-bottom: 0.5rem; font-weight: 600;">
+                <span>Tiến độ học (Đã thuộc: <span id="learned-count">0</span>/<span
+                        id="total-learned-target">0</span>)</span>
                 <span id="progress-percentage" class="highlight">0%</span>
             </div>
-            <div class="progress-bar-bg" style="width: 100%; height: 10px; background: rgba(255,255,255,0.1); border-radius: 5px; overflow: hidden;">
-                <div id="progress-fill" style="width: 0%; height: 100%; background: var(--accent-gradient); transition: width 0.5s ease-out;"></div>
+            <div class="progress-bar-bg"
+                style="width: 100%; height: 10px; background: rgba(255,255,255,0.1); border-radius: 5px; overflow: hidden;">
+                <div id="progress-fill"
+                    style="width: 0%; height: 100%; background: var(--accent-gradient); transition: width 0.5s ease-out;">
+                </div>
             </div>
         </section>
 
@@ -67,7 +77,8 @@
             </div>
             <div class="actions">
                 <button id="btn-shuffle" class="btn-secondary"><i class="fa-solid fa-shuffle"></i> Xáo trộn</button>
-                <button id="btn-flip-all" class="btn-secondary"><i class="fa-solid fa-arrows-rotate"></i> Lật tất cả</button>
+                <button id="btn-flip-all" class="btn-secondary"><i class="fa-solid fa-arrows-rotate"></i> Lật tất
+                    cả</button>
             </div>
         </section>
 
@@ -93,14 +104,14 @@
                     <div class="click-hint"><i class="fa-solid fa-hand-pointer"></i> Lật thẻ</div>
                     <div class="status-marker hidden"><i class="fa-solid fa-circle-check"></i> Đã thuộc</div>
                 </div>
-                
+
                 <!-- Mặt sau: Chi tiết -->
                 <div class="card-face card-back">
                     <div class="pinyin-group">
                         <span class="pinyin">zì</span>
                     </div>
                     <div class="sino-viet">Âm HV: <span class="sino">tự</span></div>
-                    
+
                     <div class="meaning-group">
                         <span class="badge pos" title="Từ loại">Động từ</span>
                         <div class="meaning">Chữ (nghĩa tiếng Việt)</div>
@@ -112,7 +123,8 @@
                         <p class="ex-vi">Tôi viết chữ.</p>
                     </div>
 
-                    <button class="btn-learned btn-secondary"><i class="fa-solid fa-check"></i> Đánh dấu đã thuộc</button>
+                    <button class="btn-learned btn-secondary"><i class="fa-solid fa-check"></i> Đánh dấu đã
+                        thuộc</button>
                 </div>
             </div>
         </div>
@@ -120,4 +132,5 @@
 
     <script src="app.js"></script>
 </body>
+
 </html>
