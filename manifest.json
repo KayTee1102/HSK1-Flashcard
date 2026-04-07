@@ -1,0 +1,10 @@
+{
+  "name": "HSK 1 Mastery",
+  "short_name": "HSK 1",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#0f172a",
+  "theme_color": "#3b82f6",
+  "description": "Ứng dụng học từ vựng HSK 1 với hệ thống Flashcard thông minh",
+  "orientation": "portrait"
+}

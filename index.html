@@ -13,6 +13,16 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Custom CSS -->
     <link rel="stylesheet" href="style.css">
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+    <!-- Firebase SDK (Compat) -->
+    <script src="https://www.gstatic.com/firebasejs/10.9.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.9.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.9.0/firebase-firestore-compat.js"></script>
 </head>
 <body>
     <div class="background-blobs">
@@ -25,6 +35,17 @@
         <header>
             <h1>HSK 1 <span class="highlight">Mastery</span></h1>
             <p>Khám phá bộ từ vựng cơ bản với trải nghiệm hoàn toàn mới.</p>
+            
+            <!-- Auth UI -->
+            <div id="auth-container" style="margin-top: 1rem; display: flex; justify-content: center; align-items: center; gap: 1rem;">
+                <button id="btn-login" class="btn-primary" style="padding: 0.6rem 1.2rem; font-size: 0.95rem; display: none;">
+                    <i class="fa-brands fa-google"></i> Bật Đồng Bộ (Đăng nhập)
+                </button>
+                <div id="user-profile" style="display: none; align-items: center; background: rgba(0,0,0,0.2); padding: 0.5rem 1rem; border-radius: 20px; font-weight: 600;">
+                    🟢 Xin chào, <span id="user-name" class="highlight" style="margin: 0 10px;">Guest</span> 
+                    <button id="btn-logout" class="btn-secondary" style="padding: 0.3rem 0.8rem; font-size: 0.8rem; border-color: rgba(255,100,100,0.5); color: #ff8787;">Đăng xuất</button>
+                </div>
+            </div>
         </header>
 
         <!-- Trạng thái tải file (nổi lên khi mở bằng file:// cục bộ) -->
@@ -119,5 +140,14 @@
     </template>
 
     <script src="app.js"></script>
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./sw.js')
+                    .then((reg) => console.log('ServiceWorker registered!', reg.scope))
+                    .catch((err) => console.log('ServiceWorker login failed: ', err));
+            });
+        }
+    </script>
 </body>
 </html>

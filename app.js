@@ -1,3 +1,15 @@
+// --- FIREBASE CONFIGURATION ---
+const firebaseConfig = {
+  apiKey: "AIzaSyBTIobzMjwC068mfXaVP5Vrf-eXou7u8lE",
+  authDomain: "hsk-sync-1775a.firebaseapp.com",
+  projectId: "hsk-sync-1775a",
+  storageBucket: "hsk-sync-1775a.firebasestorage.app",
+  messagingSenderId: "130586280049",
+  appId: "1:130586280049:web:2c8ac97c7b73e3a95a9bd0",
+  measurementId: "G-MH65Q5N2CK"
+};
+if (typeof firebase !== 'undefined') firebase.initializeApp(firebaseConfig);
+
 document.addEventListener('DOMContentLoaded', () => {
     const uploadSection = document.getElementById('upload-section');
     const controlsSection = document.getElementById('controls');
@@ -25,6 +37,68 @@ document.addEventListener('DOMContentLoaded', () => {
     const learnedCountSpan = document.getElementById('learned-count');
     const totalCountSpan = document.getElementById('total-learned-target');
     const wordFilter = document.getElementById('word-filter');
+
+    // --- XỬ LÝ AUTHENTICATION VÀ SYNC ---
+    const btnLogin = document.getElementById('btn-login');
+    const btnLogout = document.getElementById('btn-logout');
+    const userProfile = document.getElementById('user-profile');
+    const userNameSpan = document.getElementById('user-name');
+    let currentUser = null;
+
+    if (typeof firebase !== 'undefined') {
+        btnLogin.style.display = 'block';
+
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+        const provider = new firebase.auth.GoogleAuthProvider();
+
+        btnLogin.addEventListener('click', () => {
+            auth.signInWithPopup(provider).catch(err => alert("Lỗi đăng nhập: " + err.message));
+        });
+
+        btnLogout.addEventListener('click', () => {
+            auth.signOut();
+        });
+
+        auth.onAuthStateChanged(async (user) => {
+            if (user) {
+                currentUser = user;
+                btnLogin.style.display = 'none';
+                userProfile.style.display = 'flex';
+                userNameSpan.textContent = user.displayName;
+                
+                try {
+                    const doc = await db.collection('users').doc(user.uid).get();
+                    if (doc.exists) {
+                        const data = doc.data();
+                        if (data.learnedWords) learnedWords = data.learnedWords;
+                        if (data.hardWords) hardWords = data.hardWords;
+                        localStorage.setItem('hsk1_learned', JSON.stringify(learnedWords));
+                        localStorage.setItem('hsk1_hard', JSON.stringify(hardWords));
+                        
+                        updateProgress();
+                        if(currentData.length > 0) renderCards(currentData);
+                    }
+                } catch (error) {
+                    console.error("Lỗi đồng bộ Firebase: ", error);
+                }
+            } else {
+                currentUser = null;
+                btnLogin.style.display = 'block';
+                userProfile.style.display = 'none';
+            }
+        });
+    }
+
+    function syncToCloud() {
+        if (!currentUser || typeof firebase === 'undefined') return;
+        const db = firebase.firestore();
+        db.collection('users').doc(currentUser.uid).set({
+            learnedWords: learnedWords,
+            hardWords: hardWords,
+            lastUpdated: firebase.firestore.FieldValue.serverTimestamp()
+        }, { merge: true }).catch(err => console.error("Sync error:", err));
+    }
 
     // 1. Tự động thử tải JSON qua Fetch API
     async function tryFetchLocalFile() {
@@ -160,6 +234,7 @@ document.addEventListener('DOMContentLoaded', () => {
             btnElement.classList.add('active');
         }
         localStorage.setItem('hsk1_hard', JSON.stringify(hardWords));
+        syncToCloud();
         
         // Nếu đang ở mode filter "hard", việc bỏ sao sẽ ẩn luôn thẻ đỏ
         if (wordFilter.value === 'hard') {
@@ -184,6 +259,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         localStorage.setItem('hsk1_learned', JSON.stringify(learnedWords));
         updateProgress();
+        syncToCloud();
     }
 
     // Hàm Render Grid
